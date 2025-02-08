@@ -1,4 +1,6 @@
-{
-  "best_player": "JJ Bumrah",
-  "best_economy": 4.5
-}
+[
+  {
+    "best_player": "JJ Bumrah",
+    "economy": 4.5
+  }
+]
