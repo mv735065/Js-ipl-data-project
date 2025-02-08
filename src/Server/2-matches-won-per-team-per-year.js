@@ -1,12 +1,15 @@
 // Number of matches won per team per year in IPL.
+
 const matchData = require('../Data/matches.json');
 
 const fs=require('fs')
 
  let map=new Map();
 
+
    matchData.forEach((match)=>{
     let year=match.season;
+
     if(!map.has(year)){
         map.set(year,{});
     }

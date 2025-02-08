@@ -55,6 +55,19 @@ map_season_batters.forEach((value,key)=>{
 }
 
 
+function  add_batter_results(batsman,runs,players){
+   if(players.hasOwnProperty(batsman)){
+      players[batsman].runs+=runs;
+      players[batsman].balls+=1;
+   }
+   else{
+       players[batsman]={
+           "runs":runs,
+           "balls":1,
+       }
+   }
+}
+
 
 console.log(store_batsman_strikeRate)
 
@@ -66,18 +79,6 @@ fs.writeFileSync('/home/vamshi/Documents/JS-IPL-DATA/src/Public/output/7-strike-
 
 
 
- function  add_batter_results(batsman,runs,players){
-    if(players.hasOwnProperty(batsman)){
-       players[batsman].runs+=runs;
-       players[batsman].balls+=1;
-    }
-    else{
-        players[batsman]={
-            "runs":runs,
-            "balls":1,
-        }
-    }
- }
 
 
 

@@ -8,6 +8,29 @@ const fs = require('fs');
 
 
 
+ let store_Clousers_eachSeason={};
+
+  function outer(year){
+   let count=1;
+   return function(){
+       return  count++;
+   }
+  }
+let kk={}
+matchData.map((match)=>{ 
+   let year=match.season;
+   if(!store_Clousers_eachSeason.hasOwnProperty(year)){
+      store_Clousers_eachSeason[year] = outer(year);
+   }
+   let value=store_Clousers_eachSeason[year]();
+      kk[year]=value;
+    
+
+ });
+ console.log(kk)
+
+
+
  let map=new Map();
 
  matchData.forEach((match)=>{
@@ -21,24 +44,18 @@ const fs = require('fs');
  });
 
 
- let totalMatches=[...map.values()].reduce((sum,element)=>{
-    return sum+=element;
- },0)
-
- console.log(totalMatches)
-
  console.log(map);
 
 
 
  let result = Object.fromEntries(map);
 
-// Convert Object to JSON string
 let jsonResult = JSON.stringify(result, null, 2);
 
-// Write to data.json file
 
- fs.writeFileSync('../public/output/matchesPerYear.json',jsonResult,'utf8')
+ fs.writeFileSync('/home/vamshi/Documents/JS-IPL-DATA/src/Public/output/1-matchesPerYear.json',jsonResult,'utf8')
 
 
+
+ 
 
