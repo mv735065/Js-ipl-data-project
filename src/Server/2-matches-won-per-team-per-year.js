@@ -4,7 +4,6 @@ const matchData = require('../Data/matches.json');
 
 const fs=require('fs')
 
- let map=new Map();
 
  let  matchesWon={};
 
