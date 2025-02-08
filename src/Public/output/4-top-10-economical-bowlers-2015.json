@@ -1,16 +1,62 @@
-{
-  "RN ten Doeschate": 4,
-  "J Yadav": 4.142857142857143,
-  "V Kohli": 5.454545454545455,
-  "R Ashwin": 5.846153846153846,
-  "S Nadeem": 6.142857142857143,
-  "Parvez Rasool": 6.2,
-  "MC Henriques": 6.32,
-  "Z Khan": 6.455172413793103,
-  "MA Starc": 6.767441860465116,
-  "GB Hogg": 6.857142857142857
-}
-
-
-
-  
+[
+  {
+    "name": "RN ten Doeschate",
+    "balls": 6,
+    "runs": 4,
+    "economy": 4
+  },
+  {
+    "name": "J Yadav",
+    "balls": 42,
+    "runs": 29,
+    "economy": 4.14
+  },
+  {
+    "name": "V Kohli",
+    "balls": 11,
+    "runs": 10,
+    "economy": 5.45
+  },
+  {
+    "name": "R Ashwin",
+    "balls": 234,
+    "runs": 228,
+    "economy": 5.85
+  },
+  {
+    "name": "S Nadeem",
+    "balls": 42,
+    "runs": 43,
+    "economy": 6.14
+  },
+  {
+    "name": "Parvez Rasool",
+    "balls": 30,
+    "runs": 31,
+    "economy": 6.2
+  },
+  {
+    "name": "MC Henriques",
+    "balls": 150,
+    "runs": 158,
+    "economy": 6.32
+  },
+  {
+    "name": "Z Khan",
+    "balls": 145,
+    "runs": 156,
+    "economy": 6.46
+  },
+  {
+    "name": "MA Starc",
+    "balls": 258,
+    "runs": 291,
+    "economy": 6.77
+  },
+  {
+    "name": "GB Hogg",
+    "balls": 126,
+    "runs": 144,
+    "economy": 6.86
+  }
+]
