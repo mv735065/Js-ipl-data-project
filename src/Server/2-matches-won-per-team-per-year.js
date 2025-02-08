@@ -6,19 +6,19 @@ const fs=require('fs')
 
  let map=new Map();
 
+ let  matchesWon={};
 
    matchData.forEach((match)=>{
     let year=match.season;
-
-    if(!map.has(year)){
-        map.set(year,{});
+    
+    if(!matchesWon.hasOwnProperty(year)){
+          matchesWon[year]={};
     }
-    let team1=match.team1;
-    let team2=match.team2;
      
     let winner=match.winner;
+    if(winner==null) winner="No-result"
 
-    let obj=map.get(year);
+    let obj=matchesWon[year]
     if(!obj.hasOwnProperty(winner)){
         obj[winner]=1;
     }
@@ -27,13 +27,12 @@ const fs=require('fs')
     }
  });
 
- console.log(map);
- 
-  let result = Object.fromEntries(map);
- 
- let jsonResult = JSON.stringify(result, null, 2);
+ console.log(matchesWon);
  
  
-  fs.writeFileSync('/home/vamshi/Documents/JS-IPL-DATA/src/Public/output/matches-won-per-team-per-year.json',jsonResult,'utf8')
+ let jsonResult = JSON.stringify(matchesWon, null, 2);
+ 
+ 
+  fs.writeFileSync('/home/vamshi/Documents/JS-IPL-DATA/src/Public/output/2-matches-won-per-team-per-year.json',jsonResult,'utf8')
 
 

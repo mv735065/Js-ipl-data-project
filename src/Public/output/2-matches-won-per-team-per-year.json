@@ -1,5 +1,3 @@
-
-
 {
   "2008": {
     "Kolkata Knight Riders": 6,
@@ -42,7 +40,7 @@
     "Deccan Chargers": 6,
     "Kochi Tuskers Kerala": 6,
     "Delhi Daredevils": 4,
-    "null": 1
+    "No-result": 1
   },
   "2012": {
     "Mumbai Indians": 10,
@@ -85,7 +83,7 @@
     "Sunrisers Hyderabad": 7,
     "Delhi Daredevils": 5,
     "Mumbai Indians": 10,
-    "null": 2
+    "No-result": 2
   },
   "2016": {
     "Rising Pune Supergiants": 5,
