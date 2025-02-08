@@ -1,62 +1,84 @@
 [
-  {
-    "name": "RN ten Doeschate",
-    "balls": 6,
-    "runs": 4,
-    "economy": 4
-  },
-  {
-    "name": "J Yadav",
-    "balls": 42,
-    "runs": 29,
-    "economy": 4.14
-  },
-  {
-    "name": "V Kohli",
-    "balls": 11,
-    "runs": 10,
-    "economy": 5.45
-  },
-  {
-    "name": "R Ashwin",
-    "balls": 234,
-    "runs": 228,
-    "economy": 5.85
-  },
-  {
-    "name": "S Nadeem",
-    "balls": 42,
-    "runs": 43,
-    "economy": 6.14
-  },
-  {
-    "name": "Parvez Rasool",
-    "balls": 30,
-    "runs": 31,
-    "economy": 6.2
-  },
-  {
-    "name": "MC Henriques",
-    "balls": 150,
-    "runs": 158,
-    "economy": 6.32
-  },
-  {
-    "name": "Z Khan",
-    "balls": 145,
-    "runs": 156,
-    "economy": 6.46
-  },
-  {
-    "name": "MA Starc",
-    "balls": 258,
-    "runs": 291,
-    "economy": 6.77
-  },
-  {
-    "name": "GB Hogg",
-    "balls": 126,
-    "runs": 144,
-    "economy": 6.86
-  }
+  [
+    "RN ten Doeschate",
+    {
+      "runs": 4,
+      "balls": 6,
+      "economy": 4
+    }
+  ],
+  [
+    "J Yadav",
+    {
+      "runs": 29,
+      "balls": 42,
+      "economy": 4.143
+    }
+  ],
+  [
+    "V Kohli",
+    {
+      "runs": 10,
+      "balls": 11,
+      "economy": 5.455
+    }
+  ],
+  [
+    "R Ashwin",
+    {
+      "runs": 228,
+      "balls": 234,
+      "economy": 5.846
+    }
+  ],
+  [
+    "S Nadeem",
+    {
+      "runs": 43,
+      "balls": 42,
+      "economy": 6.143
+    }
+  ],
+  [
+    "Parvez Rasool",
+    {
+      "runs": 31,
+      "balls": 30,
+      "economy": 6.2
+    }
+  ],
+  [
+    "MC Henriques",
+    {
+      "runs": 158,
+      "balls": 150,
+      "economy": 6.32
+    }
+  ],
+  [
+    "Z Khan",
+    {
+      "runs": 156,
+      "balls": 145,
+      "economy": 6.455
+    }
+  ],
+  [
+    "MA Starc",
+    {
+      "runs": 291,
+      "balls": 258,
+      "economy": 6.767
+    }
+  ],
+  [
+    "GB Hogg",
+    {
+      "runs": 144,
+      "balls": 126,
+      "economy": 6.857
+    }
+  ]
 ]
+
+

@@ -31,26 +31,31 @@ deliverData.forEach((delivery) => {
     result[bowler].balls += 1;
 });
 
-let economies = [];
-for (let bowlerKey in result) {
-  let balls = result[bowlerKey].balls;
-  let runs = result[bowlerKey].runs;
-  let overs = balls / 6;
-  let economy = (runs / overs).toFixed(2);
-  economies.push({
-    name: bowlerKey,
-    balls: balls,
-    runs: runs,
-    economy: parseFloat(economy),
-  });
-}
+let sort_result=Object.entries(result);
 
-economies.sort((a, b) => {
-  return a.economy - b.economy;
+
+sort_result.forEach((result)=>{
+    let obj=result[1];
+    let balls=obj.balls;
+    let overs=balls/6;
+    let runs=obj.runs;
+
+    let economy=(runs/overs).toFixed(3);
+    obj.economy=parseFloat(economy);
 });
 
-let top = economies.slice(0, 10);
-let jsonResult = JSON.stringify(top, null, 2);
+
+sort_result.sort((a,b)=>{
+    let economy1=a[1].economy;
+    let economy2=b[1].economy;
+    return economy1-economy2;
+ });
+
+console.log(sort_result);
+sort_result=sort_result.slice(0,10);
+
+
+let jsonResult = JSON.stringify(sort_result, null, 2);
 fs.writeFileSync(
   "/home/vamshi/Documents/JS-IPL-DATA/src/Public/output/4-top-10-economical-bowlers-2015.json",
   jsonResult,
