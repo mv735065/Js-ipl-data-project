@@ -1,17 +1,5 @@
 [
   {
-    "2017": [
-      {
-        "name": "BA Stokes",
-        "playerMatchCount": 3
-      },
-      {
-        "name": "NM Coulter-Nile",
-        "playerMatchCount": 3
-      }
-    ]
-  },
-  {
     "2008": [
       {
         "name": "SE Marsh",
@@ -80,6 +68,18 @@
       {
         "name": "V Kohli",
         "playerMatchCount": 5
+      }
+    ]
+  },
+  {
+    "2017": [
+      {
+        "name": "BA Stokes",
+        "playerMatchCount": 3
+      },
+      {
+        "name": "NM Coulter-Nile",
+        "playerMatchCount": 3
       }
     ]
   }

@@ -3,25 +3,24 @@
 const fs = require("fs");
 const deliverData = require("../Data/deliver.json");
 
-let result = {};
-
-deliverData.forEach((delivery) => {
+let result = deliverData.reduce((acc,delivery) => {
     let id = delivery.match_id;
     let is_super_over = delivery.is_super_over;
-    if (is_super_over == "0") return;
+    if (is_super_over == "0") return acc;
 
     let bowler = delivery.bowler;
     let runs = parseInt(delivery.total_runs);
 
-    if (!result.hasOwnProperty(bowler)) {
-        result[bowler] = {
+    if (!acc.hasOwnProperty(bowler)) {
+        acc[bowler] = {
             runs: 0,
             balls: 0,
         };
     }
-    result[bowler].runs += runs;
-    result[bowler].balls += 1;
-});
+    acc[bowler].runs += runs;
+    acc[bowler].balls += 1;
+    return acc;
+},{});
 
 
 let player = getBestPlayerWithEconomy();

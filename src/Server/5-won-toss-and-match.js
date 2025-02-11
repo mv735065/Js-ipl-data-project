@@ -4,19 +4,18 @@ const matchData = require("../Data/matches.json");
 
 const fs = require("fs");
 
-let teamsWonBoth = {};
-
-matchData.forEach((match) => {
+let teamsWonBoth = matchData.reduce((acc,match) => {
     let toss_winner = match.toss_winner;
     let match_winner = match.winner;
 
-    if (toss_winner !== match_winner) return;
+    if (toss_winner !== match_winner) return acc;
 
-    if (!teamsWonBoth.hasOwnProperty(match_winner)) {
-        teamsWonBoth[match_winner] = 0;
+    if (!acc.hasOwnProperty(match_winner)) {
+        acc[match_winner] = 0;
     }
-    teamsWonBoth[match_winner] += 1;
-});
+    acc[match_winner] += 1;
+    return acc;
+},{});
 
 let jsonResult = JSON.stringify(teamsWonBoth, null, 2);
 

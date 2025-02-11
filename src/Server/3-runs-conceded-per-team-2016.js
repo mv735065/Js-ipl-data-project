@@ -8,21 +8,22 @@ let ids_2016 = matchData
     .filter((match) => match.season === "2016")
     .map((match) => match.id);
 
-let runsPerTeam = {};
-
-deliverData.forEach((delivery) => {
+let runsPerTeam = deliverData.reduce((acc,delivery) => {
     let id = delivery.match_id;
 
-    if (!ids_2016.includes(id)) return;
+    if (!ids_2016.includes(id)) return acc;
 
     let runs = parseInt(delivery.extra_runs);
     let bowling_team = delivery.bowling_team;
-
-    if (!runsPerTeam.hasOwnProperty(bowling_team)) {
-        runsPerTeam[bowling_team] = 0;
+   
+    if(!acc.hasOwnProperty(bowling_team)) {
+        acc[bowling_team] = 0;
     }
-    runsPerTeam[bowling_team] += runs;
-});
+    acc[bowling_team] += runs;
+    return acc;
+},{});
+
+console.log(runsPerTeam)
 
 let jsonResult = JSON.stringify(runsPerTeam, null, 2);
 

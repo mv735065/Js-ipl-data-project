@@ -8,11 +8,9 @@ let match_ids_2015 = matchData
     .filter((match) => match.season === "2015")
     .map((match) => match.id);
 
-let result = {};
-
-deliverData.forEach((delivery) => {
+let result = deliverData.reduce((acc,delivery) => {
     let id = delivery.match_id;
-    if (!match_ids_2015.includes(id)) return;
+    if (!match_ids_2015.includes(id)) return acc;
 
     let bowler = delivery.bowler;
     let runs =
@@ -20,16 +18,21 @@ deliverData.forEach((delivery) => {
         parseInt(delivery.wide_runs) +
         parseInt(delivery.noball_runs);
 
-    if (!result.hasOwnProperty(bowler)) {
-        result[bowler] = {
+    if (!acc.hasOwnProperty(bowler)) {
+        acc[bowler] = {
             runs: 0,
             balls: 0,
         };
     }
-    result[bowler].runs += runs;
+    acc[bowler].runs += runs;
     if (!(parseInt(delivery.wide_runs) > 0 || parseInt(delivery.noball_runs) > 0))
-        result[bowler].balls += 1;
-});
+        acc[bowler].balls += 1;
+    return acc;
+},{});
+
+
+
+
 
 let sort_result = Object.entries(result);
 

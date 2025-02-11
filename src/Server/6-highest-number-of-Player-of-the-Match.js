@@ -4,26 +4,27 @@ const matchData = require("../Data/matches.json");
 
 const fs = require("fs");
 
-let map = new Map();
-
-matchData.forEach((match) => {
+let map=matchData.reduce((acc,match) => {
     let year = match.season;
-    if (!map.has(year)) {
-        map.set(year, {});
+    if (!acc.hasOwnProperty(year)) {
+       acc[year]={};
     }
 
     let player_of_match = match.player_of_match;
-    let years_store = map.get(year);
+    if(player_of_match===null) return acc;
+    let years_store = acc[year];
 
     add_player_result_in_year(player_of_match, years_store);
-});
+    return acc;
+},{});
 
-let result = [];
+let result=Object.entries(map).reduce((acc,[keyword,value])=>{
+    let player=get_highest_score_player(value);
+    acc.push({[keyword]:player});
+    return acc;
 
-map.forEach((players, year) => {
-    let player = get_highest_score_player(players);
-    result.push({ [year]: player });
-});
+},[]);
+
 
 function add_player_result_in_year(player_of_match, years_store) {
     if (years_store.hasOwnProperty(player_of_match)) {
@@ -61,7 +62,6 @@ function get_highest_score_player(players) {
     return store;
 }
 
-console.log(result);
 
 let jsonResult = JSON.stringify(result, null, 2);
 

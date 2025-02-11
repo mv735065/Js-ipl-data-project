@@ -6,8 +6,6 @@ const matchData = require('../Data/matches.json');
 
 const fs = require('fs');
 
-
-
 let store_Clousers_eachSeason = {};
 
 function outer(year) {
@@ -29,8 +27,6 @@ matchData.map((match) => {
 });
 console.log(kk)
 
-
-
 let map = new Map();
 
 matchData.forEach((match) => {
@@ -43,10 +39,7 @@ matchData.forEach((match) => {
 
 });
 
-
 console.log(map);
-
-
 
 let result = Object.fromEntries(map);
 
