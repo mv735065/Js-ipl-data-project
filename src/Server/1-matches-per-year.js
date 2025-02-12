@@ -1,47 +1,30 @@
 //Number of matches played per year for all the years in IPL.
 
-
-
+const { log } = require('console');
 const matchData = require('../Data/matches.json');
 
 const fs = require('fs');
 
 let store_Clousers_eachSeason = {};
 
-function outer(year) {
-   let count = 1;
+function clouser(year) {
+   let count = 0;
    return function () {
-      return count++;
+     count+=1;
+      return count;
    }
 }
-let kk = {}
+let result = {};
 matchData.map((match) => {
    let year = match.season;
    if (!store_Clousers_eachSeason.hasOwnProperty(year)) {
-      store_Clousers_eachSeason[year] = outer(year);
+      store_Clousers_eachSeason[year] = clouser(year);
    }
+
    let value = store_Clousers_eachSeason[year]();
-   kk[year] = value;
-
-
+   result[year] = value;
 });
-console.log(kk)
-
-let map = new Map();
-
-matchData.forEach((match) => {
-   let year = match.season;
-   if (map.has(year)) {
-      map.set(year, map.get(year) + 1);
-   } else {
-      map.set(year, 1);
-   }
-
-});
-
-console.log(map);
-
-let result = Object.fromEntries(map);
+console.log(result);
 
 let jsonResult = JSON.stringify(result, null, 2);
 
