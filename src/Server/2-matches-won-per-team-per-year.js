@@ -5,17 +5,23 @@ const matchData = require('../Data/matches.json');
 const fs = require('fs')
 
 
-let matchesWon = matchData.reduce((acc,match)=>{
-    let year = match.season;
-    console.log(typeof acc);
-    
-    if (!acc.hasOwnProperty(year)) {
-        acc[year] = {};
+
+let matchesWon =getMatchesWonPerTeam(matchData);
+
+
+function getMatchesWonPerTeam(matchData){
+    let store={};
+    for(let match of matchData){
+        let year = match.season;
+
+    if (!store.hasOwnProperty(year)) {
+        store[year] = {};
     }
     let winner = match.winner;
-    if (winner == null) winner = "No-result"
+    if (winner == null) winner = "No-result";
 
-    let obj = acc[year]
+
+    let obj = store[year]
     if (!obj.hasOwnProperty(winner)) {
         obj[winner] = 1;
     }
@@ -23,11 +29,9 @@ let matchesWon = matchData.reduce((acc,match)=>{
         obj[winner] += 1;
     }
 
-    return acc;
-
-},{})
-
-
+    }
+    return store;
+}
 
 console.log(matchesWon);
 

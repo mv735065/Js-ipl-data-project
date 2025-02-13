@@ -5,20 +5,25 @@ const deliverData = require("../Data/deliver.json");
 
 const fs = require("fs");
 
-let map_ids_to_season = new Map();
+let mapidsToSeason =getIdsOfEachSeason(matchData);
 
-matchData.forEach((match) => {
-   let season = match.season;
-   let id = match.id;
+function getIdsOfEachSeason(matchData){
+   let store=new Map();
+   for(let match of matchData){
+      let season = match.season;
+      let id = match.id;
+      store.set(id, season);
+   }
+   return store;
+}
 
-   map_ids_to_season.set(id, season);
-});
+
 
 let map_season_batters = new Map();
 
 deliverData.forEach((delivery) => {
    let match_id = delivery.match_id;
-   let season = map_ids_to_season.get(match_id);
+   let season = mapidsToSeason.get(match_id);
    if (!map_season_batters.has(season)) {
       map_season_batters.set(season, {});
    }

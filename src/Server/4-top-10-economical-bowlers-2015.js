@@ -4,63 +4,78 @@ const fs = require("fs");
 const deliverData = require("../Data/deliver.json");
 const matchData = require("../Data/matches.json");
 
-let match_ids_2015 = matchData
-    .filter((match) => match.season === "2015")
-    .map((match) => match.id);
+let match_ids_2015 = getIdsOf2015(matchData);
 
-let result = deliverData.reduce((acc,delivery) => {
+
+let bowlersData = getEachBowlerData(deliverData);
+
+let bowlersWithEconomy = addBowlersEconomyAndSort(bowlersData);
+
+bowlersWithEconomy = bowlersWithEconomy.slice(0, 10);
+
+let jsonResult = JSON.stringify(bowlersWithEconomy, null, 2);
+
+fs.writeFileSync(
+  "/home/vamshi/Documents/JS-IPL-DATA/src/Public/output/4-top-10-economical-bowlers-2015.json",
+  jsonResult,
+  "utf8"
+);
+
+function getIdsOf2015(matchData) {
+  let ids = [];
+  for (let match of matchData) {
+    if (match.season === "2015") ids.push(match.id);
+  }
+  return ids;
+}
+
+function getEachBowlerData(deliverData) {
+  let store = {};
+
+  for (let delivery of deliverData) {
     let id = delivery.match_id;
-    if (!match_ids_2015.includes(id)) return acc;
+    if (!match_ids_2015.includes(id)) continue;
 
     let bowler = delivery.bowler;
     let runs =
-        parseInt(delivery.batsman_runs) +
-        parseInt(delivery.wide_runs) +
-        parseInt(delivery.noball_runs);
+      parseInt(delivery.batsman_runs) +
+      parseInt(delivery.wide_runs) +
+      parseInt(delivery.noball_runs);
 
-    if (!acc.hasOwnProperty(bowler)) {
-        acc[bowler] = {
-            runs: 0,
-            balls: 0,
-        };
+
+    if (!store.hasOwnProperty(bowler)) {
+      store[bowler] = {
+        runs: 0,
+        balls: 0,
+      };
     }
-    acc[bowler].runs += runs;
-    if (!(parseInt(delivery.wide_runs) > 0 || parseInt(delivery.noball_runs) > 0))
-        acc[bowler].balls += 1;
-    return acc;
-},{});
+    store[bowler].runs += runs;
+    if (
+      !(parseInt(delivery.wide_runs) > 0 || parseInt(delivery.noball_runs) > 0)
+    )
+      store[bowler].balls += 1;
+  }
+  return store;
+}
 
+function addBowlersEconomyAndSort(bowlersData) {
+  let sort_result = Object.entries(bowlersData);
 
-
-
-
-let sort_result = Object.entries(result);
-
-
-sort_result.forEach((result) => {
-    let obj = result[1];
+  for (let [key, result] of sort_result) {
+    let obj = result;
     let balls = obj.balls;
     let overs = balls / 6;
     let runs = obj.runs;
 
     let economy = (runs / overs).toFixed(3);
     obj.economy = parseFloat(economy);
-});
+  }
 
-
-sort_result.sort((a, b) => {
+  sort_result.sort((a, b) => {
     let economy1 = a[1].economy;
     let economy2 = b[1].economy;
     return economy1 - economy2;
-});
+  });
 
-console.log(sort_result);
-sort_result = sort_result.slice(0, 10);
-
-
-let jsonResult = JSON.stringify(sort_result, null, 2);
-fs.writeFileSync(
-    "/home/vamshi/Documents/JS-IPL-DATA/src/Public/output/4-top-10-economical-bowlers-2015.json",
-    jsonResult,
-    "utf8"
-);
+  return sort_result;
+}

@@ -4,26 +4,52 @@ const matchData = require("../Data/matches.json");
 
 const fs = require("fs");
 
-let map=matchData.reduce((acc,match) => {
-    let year = match.season;
-    if (!acc.hasOwnProperty(year)) {
-       acc[year]={};
+
+let playersData = getCountEachPlayerWon(matchData);
+
+let playerPerSeason = getMaximumOwnPlayerPerSeason(playersData);
+
+
+let jsonResult = JSON.stringify(playerPerSeason, null, 2);
+
+fs.writeFileSync(
+    "/home/vamshi/Documents/JS-IPL-DATA/src/Public/output/6-highest-number-of-Player-of-the-Match.json",
+    jsonResult,
+    "utf8"
+);
+
+
+function getCountEachPlayerWon(matchData) {
+
+    let store = {};
+
+    for (let match of matchData) {
+        let year = match.season;
+        if (!store.hasOwnProperty(year)) {
+            store[year] = {};
+        }
+
+        let player_of_match = match.player_of_match;
+        let years_store = store[year];
+
+        add_player_result_in_year(player_of_match, years_store);
+    };
+    return store;
+
+}
+
+
+function getMaximumOwnPlayerPerSeason(playersData) {
+    let store = [];
+    for (let key in playersData) {
+        let year = key;
+        let players = playersData[year];
+        let player = get_highest_score_player(players);
+        store.push({ [year]: player });
     }
 
-    let player_of_match = match.player_of_match;
-    if(player_of_match===null) return acc;
-    let years_store = acc[year];
-
-    add_player_result_in_year(player_of_match, years_store);
-    return acc;
-},{});
-
-let result=Object.entries(map).reduce((acc,[keyword,value])=>{
-    let player=get_highest_score_player(value);
-    acc.push({[keyword]:player});
-    return acc;
-
-},[]);
+    return store;
+}
 
 
 function add_player_result_in_year(player_of_match, years_store) {
@@ -63,10 +89,4 @@ function get_highest_score_player(players) {
 }
 
 
-let jsonResult = JSON.stringify(result, null, 2);
 
-fs.writeFileSync(
-    "/home/vamshi/Documents/JS-IPL-DATA/src/Public/output/6-highest-number-of-Player-of-the-Match.json",
-    jsonResult,
-    "utf8"
-);
