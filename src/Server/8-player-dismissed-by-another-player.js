@@ -7,12 +7,10 @@ const fs = require("fs");
 
 let map_store = deliverData.reduce((acc, delivery) => {
     let player_dismissed = delivery.player_dismissed;
-    if (player_dismissed == null || player_dismissed == "") return acc;
+    if (player_dismissed == null || player_dismissed == "" ||  delivery.dismissal_kind==="run out") return acc;
     let dismissed_by = delivery.bowler;
 
-    if (delivery.fielder !== "") {
-        dismissed_by = delivery.fielder;
-    }
+ 
 
     if (!acc.hasOwnProperty(player_dismissed)) {
         acc[player_dismissed] = {};
