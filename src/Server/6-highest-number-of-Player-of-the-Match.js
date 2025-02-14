@@ -18,7 +18,6 @@ fs.writeFileSync(
     "utf8"
 );
 
-
 function getCountEachPlayerWon(matchData) {
 
     let store = {};
@@ -35,9 +34,7 @@ function getCountEachPlayerWon(matchData) {
         add_player_result_in_year(player_of_match, years_store);
     };
     return store;
-
 }
-
 
 function getMaximumOwnPlayerPerSeason(playersData) {
     let store = [];
@@ -47,7 +44,6 @@ function getMaximumOwnPlayerPerSeason(playersData) {
         let player = get_highest_score_player(players);
         store.push({ [year]: player });
     }
-
     return store;
 }
 

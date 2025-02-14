@@ -4,70 +4,13 @@ const matchData = require("../Data/matches.json");
 const deliverData = require("../Data/deliver.json");
 
 const fs = require("fs");
+const { log } = require("console");
 
-let mapidsToSeason =getIdsOfEachSeason(matchData);
+let mapidsToSeason = getIdsOfEachSeason(matchData);
 
-function getIdsOfEachSeason(matchData){
-   let store=new Map();
-   for(let match of matchData){
-      let season = match.season;
-      let id = match.id;
-      store.set(id, season);
-   }
-   return store;
-}
+let batsmanRunsPerSeason = getBattersData(deliverData);
 
-
-
-let map_season_batters = new Map();
-
-deliverData.forEach((delivery) => {
-   let match_id = delivery.match_id;
-   let season = mapidsToSeason.get(match_id);
-   if (!map_season_batters.has(season)) {
-      map_season_batters.set(season, {});
-   }
-
-   add_batter_results(
-      delivery.batsman,
-      parseInt(delivery.batsman_runs),
-      map_season_batters.get(season)
-   );
-});
-
-let store_batsman_strikeRate = {};
-
-add_strike_rate();
-
-function add_strike_rate() {
-   map_season_batters.forEach((value, key) => {
-      let season = key;
-
-      let obj = {};
-
-      for (let batsman_key in value) {
-         let player = value[batsman_key];
-         let strike_rate = ((player.runs / player.balls) * 100).toFixed(2);
-         player["strike_rate"] = parseFloat(strike_rate)
-         obj[batsman_key] = player["strike_rate"];
-      }
-      store_batsman_strikeRate[season] = obj;
-   });
-}
-
-function add_batter_results(batsman, runs, players) {
-   if (players.hasOwnProperty(batsman)) {
-      players[batsman].runs += runs;
-      players[batsman].balls += 1;
-   } else {
-      players[batsman] = {
-         runs: runs,
-         balls: 1,
-      };
-   }
-}
-
-console.log(store_batsman_strikeRate);
+let store_batsman_strikeRate = addStrikeRate(batsmanRunsPerSeason);
 
 let jsonResult = JSON.stringify(store_batsman_strikeRate, null, 4);
 
@@ -76,3 +19,59 @@ fs.writeFileSync(
    jsonResult,
    "utf8"
 );
+
+
+function getIdsOfEachSeason(matchData) {
+   let store = new Map();
+   for (let match of matchData) {
+      let season = match.season;
+      let id = match.id;
+      store.set(id, season);
+   }
+   return store;
+}
+
+function getBattersData(deliverData) {
+   let store = {};
+   for (let delivery of deliverData) {
+      let match_id = delivery.match_id;
+      let season = mapidsToSeason.get(match_id);
+      if (!store.hasOwnProperty(season)) {
+         store[season] = {};
+      }
+      let players = store[season];
+      let batsman = delivery.batsman;
+      let runs = parseInt(delivery.batsman_runs);
+
+      if (!players.hasOwnProperty(batsman)) {
+         players[batsman] = {
+            runs: 0,
+            balls: 0,
+         }
+      }
+      players[batsman].runs += runs;
+      players[batsman].balls += 1;
+   }
+   return store;
+}
+
+function addStrikeRate(batsmanRunsPerSeason) {
+   let store = {};
+
+   for (let key in batsmanRunsPerSeason) {
+      let value = batsmanRunsPerSeason[key];
+      let season = key;
+      let obj = {};
+
+      for (let batsman_key in value) {
+         let player = value[batsman_key];
+         let strike_rate = ((player.runs / player.balls) * 100).toFixed(2);
+         player["strike_rate"] = parseFloat(strike_rate)
+         obj[batsman_key] = player["strike_rate"];
+      }
+      store[season] = obj;
+   }
+   return store;
+}
+
+

@@ -6,6 +6,10 @@ const fs = require("fs");
 
 let ids_2016 = getIdsOf2016(matchData);
 
+let runsPerTeam = getRunsPerTeam(deliverData);
+
+let jsonResult = JSON.stringify(runsPerTeam, null, 2);
+
 
 function getIdsOf2016(matchData){
     let ids=[];
@@ -14,9 +18,6 @@ function getIdsOf2016(matchData){
     }
     return ids;
 }
-
-
-let runsPerTeam = getRunsPerTeam(deliverData);
 
 function getRunsPerTeam(deliverData){
     let store={};
@@ -34,15 +35,9 @@ function getRunsPerTeam(deliverData){
         }
         store[bowling_team] += runs;
     };
-    
     return store;
-
 }
-console.log(runsPerTeam);
 
-
-
-let jsonResult = JSON.stringify(runsPerTeam, null, 2);
 
 fs.writeFileSync(
     "/home/vamshi/Documents/JS-IPL-DATA/src/Public/output/3-runs-conceded-per-team-2016.json",

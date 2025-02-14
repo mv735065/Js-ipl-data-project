@@ -4,7 +4,6 @@ const matchData = require("../Data/matches.json");
 
 const fs = require("fs");
 
-
 let teamsWonBoth = getTeamCountBothWon(matchData);
 
 let jsonResult = JSON.stringify(teamsWonBoth, null, 2);

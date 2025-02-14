@@ -17,8 +17,6 @@ fs.writeFileSync(
     "utf8"
 );
 
-
-
 function getDataPlayerDismmisedByOther(deliverData) {
 
     let store = {};
@@ -39,7 +37,6 @@ function getDataPlayerDismmisedByOther(deliverData) {
         else{
             player_map[dismissed_by] += 1;
         }
-     
     }
     return store;
 }
@@ -61,14 +58,11 @@ function getHighestDismmised(playersData) {
                 player = key;
                 max_value = value;
                 dismissed_by = player_dismissed_by;
-
             }
         }
     }
 
-    console.log(max_value, player, dismissed_by);
-
-    return {
+ return {
         [player]: {
             bowler: dismissed_by,
             count: max_value,
