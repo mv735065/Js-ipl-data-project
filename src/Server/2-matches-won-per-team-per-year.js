@@ -4,11 +4,8 @@ const matchData = require('../Data/matches.json');
 
 const fs = require('fs')
 
-
 let matchesWon = matchData.reduce((acc,match)=>{
     let year = match.season;
-    console.log(typeof acc);
-    
     if (!acc.hasOwnProperty(year)) {
         acc[year] = {};
     }
@@ -26,10 +23,6 @@ let matchesWon = matchData.reduce((acc,match)=>{
     return acc;
 
 },{})
-
-
-
-console.log(matchesWon);
 
 
 let jsonResult = JSON.stringify(matchesWon, null, 2);
