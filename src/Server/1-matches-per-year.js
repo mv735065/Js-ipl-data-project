@@ -5,26 +5,15 @@ const matchData = require('../Data/matches.json');
 
 const fs = require('fs');
 
-let store_Clousers_eachSeason = {};
-
-function clouser(year) {
-   let count = 0;
-   return function () {
-     count+=1;
-      return count;
-   }
-}
-let result = {};
-matchData.map((match) => {
+let result =matchData.reduce((acc,match) => {
    let year = match.season;
-   if (!store_Clousers_eachSeason.hasOwnProperty(year)) {
-      store_Clousers_eachSeason[year] = clouser(year);
+   if (!acc.hasOwnProperty(year)) {
+      acc[year] = 0;
    }
+     acc[year]+=1;
 
-   let value = store_Clousers_eachSeason[year]();
-   result[year] = value;
-});
-console.log(result);
+     return acc;
+},{});
 
 let jsonResult = JSON.stringify(result, null, 2);
 

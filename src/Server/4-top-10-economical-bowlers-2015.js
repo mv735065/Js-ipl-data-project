@@ -31,9 +31,6 @@ let result = deliverData.reduce((acc,delivery) => {
 },{});
 
 
-
-
-
 let sort_result = Object.entries(result);
 
 
