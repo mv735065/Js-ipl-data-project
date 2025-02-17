@@ -4,69 +4,76 @@ const matchData = require("../Data/matches.json");
 
 const fs = require("fs");
 
-let map=matchData.reduce((acc,match) => {
+let playerOfMatchdataEachYear = getPlayerOfTheMatchEachYear(matchData);
+
+let result = Object.entries(playerOfMatchdataEachYear).reduce(
+    (acc, [keyword, value]) => {
+      let player = getHighestScorePlayer(value);
+      acc.push({ [keyword]: player });
+      return acc;
+    },
+    []
+  );
+
+function getPlayerOfTheMatchEachYear(matchData) {
+  return matchData.reduce((acc, match) => {
     let year = match.season;
     if (!acc.hasOwnProperty(year)) {
-       acc[year]={};
+      acc[year] = {};
     }
 
     let player_of_match = match.player_of_match;
-    if(player_of_match===null) return acc;
+    if (player_of_match === null) return acc;
     let years_store = acc[year];
 
-    add_player_result_in_year(player_of_match, years_store);
+    addPlayerResultInYear(player_of_match, years_store);
     return acc;
-},{});
-
-let result=Object.entries(map).reduce((acc,[keyword,value])=>{
-    let player=get_highest_score_player(value);
-    acc.push({[keyword]:player});
-    return acc;
-
-},[]);
-
-
-function add_player_result_in_year(player_of_match, years_store) {
-    if (years_store.hasOwnProperty(player_of_match)) {
-        years_store[player_of_match] += 1;
-    } else {
-        years_store[player_of_match] = 1;
-    }
+  }, {});
 }
 
-function get_highest_score_player(players) {
-    let store = [];
-    let score = 0;
-    let winner = null;
-
-    for (let playerKey in players) {
-        if (players[playerKey] > score) {
-            store = [];
-            score = players[playerKey];
-            winner = playerKey;
-            store.push({
-                name: winner,
-                playerMatchCount: score,
-            });
-            continue;
-        }
-        if (players[playerKey] == score) {
-            score = players[playerKey];
-            winner = playerKey;
-            store.push({
-                name: winner,
-                playerMatchCount: score,
-            });
-        }
-    }
-    return store;
+function addPlayerResultInYear(player_of_match, years_store) {
+  if (years_store.hasOwnProperty(player_of_match)) {
+    years_store[player_of_match] += 1;
+  } else {
+    years_store[player_of_match] = 1;
+  }
 }
 
+function getHighestScorePlayer(players) {
+  let maxScore = 0;
+  let winner = null;
+    let playersKey=Object.keys(players);
+
+    return  playersKey.reduce((acc,key)=>{
+        let score=players[key];
+        if (maxScore < score) {
+          acc = [];
+          maxScore = score;
+          winner = key;
+          acc.push({
+            name: winner,
+            playerMatchCount: maxScore,
+          });
+          return acc;
+        }
+        if (maxScore== score) {
+          maxScore = score;
+          winner = key;
+          acc.push({
+            name: winner,
+            playerMatchCount: maxScore,
+          });
+        }
+        return acc;
+
+     },[]);
+
+}
 
 let jsonResult = JSON.stringify(result, null, 2);
 
 fs.writeFileSync(
-    "/home/vamshi/Documents/JS-IPL-DATA/src/Public/output/6-highest-number-of-Player-of-the-Match.json",
-    jsonResult,
-    "utf8"
+  "../Public/output/6-highest-number-of-Player-of-the-Match.json",
+  jsonResult,
+  "utf8"
 );

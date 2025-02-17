@@ -9,41 +9,36 @@ let mapidsToSeason = matchData.reduce((acc, match) => {
   let season = match.season;
   let id = match.id;
   acc.set(id, season);
-
   return acc;
 }, new Map());
 
-let batsmanRunsPerSeason = deliverData.reduce((acc, delivery) => {
-  let match_id = delivery.match_id;
-  let season = mapidsToSeason.get(match_id);
-  if (!acc.hasOwnProperty(season)) {
-    acc[season] = {};
-  }
-  let players = acc[season];
-  let batsman = delivery.batsman;
-  let runs = parseInt(delivery.batsman_runs);
-
-  if (!players.hasOwnProperty(batsman)) {
-    players[batsman] = {
-      runs: 0,
-      balls: 0,
-    };
-  }
-  players[batsman].runs += runs;
-  players[batsman].balls += 1;
-
-  return acc;
-}, {});
+let batsmanRunsPerSeason = getBatsmanRunsPerSeason(mapidsToSeason, deliverData);
 
 let storeBatsmanStrikeRate = addStrikeRate(batsmanRunsPerSeason);
 
-let jsonResult = JSON.stringify(storeBatsmanStrikeRate, null, 4);
+function getBatsmanRunsPerSeason(mapidsToSeason, deliverData) {
+  return deliverData.reduce((acc, delivery) => {
+    let match_id = delivery.match_id;
+    let season = mapidsToSeason.get(match_id);
+    if (!acc.hasOwnProperty(season)) {
+      acc[season] = {};
+    }
+    let players = acc[season];
+    let batsman = delivery.batsman;
+    let runs = parseInt(delivery.batsman_runs);
 
-fs.writeFileSync(
-  "/home/vamshi/Documents/JS-IPL-DATA/src/Public/output/7-strike-rate-batsman-each-season.json",
-  jsonResult,
-  "utf8"
-);
+    if (!players.hasOwnProperty(batsman)) {
+      players[batsman] = {
+        runs: 0,
+        balls: 0,
+      };
+    }
+    players[batsman].runs += runs;
+    players[batsman].balls += 1;
+
+    return acc;
+  }, {});
+}
 
 function addStrikeRate(batsmanRunsPerSeason) {
   let store = {};
@@ -63,3 +58,11 @@ function addStrikeRate(batsmanRunsPerSeason) {
   }
   return store;
 }
+
+let jsonResult = JSON.stringify(storeBatsmanStrikeRate, null, 4);
+
+fs.writeFileSync(
+  "../Public/output/7-strike-rate-batsman-each-season.json",
+  jsonResult,
+  "utf8"
+);
